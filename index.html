@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Swiflora Logistics | Global Courier, Freight & Fulfillment</title>
+  <meta name="description" content="Swiflora Logistics offers air freight, sea freight, road transport, door-to-door courier services, and real-time shipment tracking worldwide.">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#0D1B26">
+  <link rel="canonical" href="https://www.swifloralogistics.com/">
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <meta property="og:title" content="Swiflora Logistics">
+  <meta property="og:description" content="Global courier and freight services with real-time tracking and instant quote support.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.swifloralogistics.com/">
+  <meta property="twitter:card" content="summary_large_image">
+
+  <!-- Supabase JS Client SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- CSS Dependencies -->
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <link rel="stylesheet" href="./css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+
+  <!-- Dynamic Header Container -->
+  <div id="header-container"></div>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <svg class="hero-map-bg" viewBox="0 0 1180 620" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g fill="none" stroke="#24384A" stroke-width="1">
+        <line x1="0" y1="120" x2="1180" y2="120"/>
+        <line x1="0" y1="260" x2="1180" y2="260"/>
+        <line x1="0" y1="400" x2="1180" y2="400"/>
+        <line x1="0" y1="540" x2="1180" y2="540"/>
+        <line x1="180" y1="0" x2="180" y2="620"/>
+        <line x1="480" y1="0" x2="480" y2="620"/>
+        <line x1="780" y1="0" x2="780" y2="620"/>
+        <line x1="1040" y1="0" x2="1040" y2="620"/>
+      </g>
+      <g fill="none" stroke="#C1791E" stroke-width="1.4" opacity="0.85">
+        <path class="lane-dash" d="M120,470 C 320,300 420,260 620,180"/>
+        <path class="lane-dash" d="M620,180 C 800,120 900,220 1080,150"/>
+        <path class="lane-dash" d="M180,150 C 340,220 520,410 760,470"/>
+      </g>
+      <g fill="#E4A85C">
+        <circle cx="120" cy="470" r="4"/>
+        <circle cx="620" cy="180" r="4"/>
+        <circle cx="1080" cy="150" r="4"/>
+        <circle cx="180" cy="150" r="4"/>
+        <circle cx="760" cy="470" r="4"/>
+      </g>
+    </svg>
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="hero-title" id="heroHeadline">Grow Your Reach Across the <span>Globe</span></h1>
+        <p class="hero-subtitle" id="heroSubheadline">Track shipments in real-time, get instant freight quotes, and experience courier service rooted in reliability and built for speed.</p>
+
+        <!-- Tracking Bar Widget -->
+        <div class="tracking-search-box">
+          <div class="mono" style="font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--on-ink-muted); margin-bottom: 0.6rem; font-weight: 600;">Waybill Lookup</div>
+          <form id="heroTrackingForm">
+            <div class="tracking-input-group">
+              <input type="text" id="heroTrackingInput" placeholder="SWF-20260811-884920" required>
+              <button type="submit" class="btn btn-accent"><i class="fas fa-search"></i> Track Package</button>
+            </div>
+          </form>
+          <div style="font-size: 0.85rem; margin-top: 0.75rem; color: var(--on-ink-muted);">
+            Try sample tracking numbers: <a href="./tracking.html?tracking=SWF-20260811-884920" class="mono" style="color: var(--accent); text-decoration: underline;">SWF-20260811-884920</a> or <a href="./tracking.html?tracking=SWF-20260811-339102" class="mono" style="color: var(--accent); text-decoration: underline;">SWF-20260811-339102</a>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap;">
+          <a href="./quote.html" class="btn btn-accent btn-lg"><i class="fas fa-calculator"></i> Get a Free Quote</a>
+          <a href="./services.html" class="btn btn-line btn-lg"><i class="fas fa-boxes"></i> Our Services</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Manifest Stat Band (overlaps hero) -->
+  <div class="container" style="position: relative; margin-top: -6.5rem; margin-bottom: 2rem; z-index: 6;">
+    <div class="ticket-stats">
+      <div class="ticket-stat">
+        <div class="ticket-value">120+</div>
+        <div class="ticket-label">Countries Served</div>
+      </div>
+      <div class="ticket-stat">
+        <div class="ticket-value">3.1M+</div>
+        <div class="ticket-label">Packages Delivered</div>
+      </div>
+      <div class="ticket-stat">
+        <div class="ticket-value">99.6%</div>
+        <div class="ticket-label">On-Time Delivery</div>
+      </div>
+      <div class="ticket-stat">
+        <div class="ticket-value">24/7</div>
+        <div class="ticket-label">Customer Support</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- In Transit — editorial photo band -->
+  <section class="section-padding bg-paper">
+    <div class="container">
+      <div class="text-center" style="margin-bottom: 3rem;">
+        <span class="section-tag">IN TRANSIT</span>
+        <h2 class="section-title" style="margin-bottom: 0.75rem;">Every Shipment, Tracked Lane by Lane</h2>
+        <p class="section-subtitle">See how Swiflora moves urgent cargo with precision through air, sea, and road logistics.</p>
+      </div>
+
+      <div class="photo-band-grid">
+        <div class="photo-card">
+          <img src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1200&q=80" alt="Aerial view of a container port with cranes loading cargo ships">
+          <div class="photo-card-caption">
+            <span class="cap-tag">Ocean Freight</span>
+            <h3>Full &amp; part-container shipping across every major trade lane</h3>
+          </div>
+        </div>
+        <div class="photo-band-stack">
+          <div class="photo-card">
+            <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800&q=80" alt="Cargo airplane on the tarmac at sunset">
+            <div class="photo-card-caption">
+              <span class="cap-tag">Air Freight</span>
+              <h3>Priority air cargo dispatch</h3>
+            </div>
+          </div>
+          <div class="photo-card">
+            <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=800&q=80" alt="Freight truck driving on a mountain highway">
+            <div class="photo-card-caption">
+              <span class="cap-tag">Road Freight</span>
+              <h3>Cross-border trucking</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="route-divider" style="margin: 0 auto 4rem auto;"><i class="fas fa-plane"></i></div>
+
+  <!-- Why Choose Us -->
+  <section class="section-padding" style="padding-top: 0;">
+    <div class="container">
+      <div class="grid grid-2" style="align-items: center; gap: 3rem;">
+        <div>
+          <span class="section-tag">WHY SWIFLORA</span>
+          <h2 class="section-title">Logistics Excellence Built on Trust &amp; Tech</h2>
+          <p class="text-muted" style="margin-bottom: 2rem;">We combine live GPS telemetry, automated warehousing, and express customs handling to ensure your packages reach their destination safely.</p>
+
+          <div style="display: flex; flex-direction: column; gap: 1.75rem;">
+            <div style="display: flex; gap: 1.25rem;">
+              <div class="service-icon" style="margin: 0; flex-shrink: 0;"><i class="fas fa-satellite"></i></div>
+              <div>
+                <h3>Real-time GPS Tracking</h3>
+                <p class="text-muted" style="margin-top: 0.4rem;">Know the exact location and status of your shipment every step of the journey.</p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 1.25rem;">
+              <div class="service-icon" style="margin: 0; flex-shrink: 0; background: var(--accent-light); color: var(--accent-hover);"><i class="fas fa-plane-departure"></i></div>
+              <div>
+                <h3>Express Air &amp; Sea Freight</h3>
+                <p class="text-muted" style="margin-top: 0.4rem;">Customized forwarding schedules connecting major trade hubs across four continents.</p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 1.25rem;">
+              <div class="service-icon" style="margin: 0; flex-shrink: 0;"><i class="fas fa-shield-alt"></i></div>
+              <div>
+                <h3>Secured Cargo Insurance</h3>
+                <p class="text-muted" style="margin-top: 0.4rem;">End-to-end liability coverage and climate-controlled storage for high-value cargo.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="photo-card" style="min-height: 500px;">
+          <img src="https://images.unsplash.com/photo-1548345680-f5475ea5df84?auto=format&fit=crop&w=1000&q=80" alt="Hand holding a phone with a live delivery tracking map open">
+          <div class="photo-card-caption">
+            <span class="cap-tag mono">SWF-20260811-884920</span>
+            <h3>Live from pickup to delivery</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Popular Services Grid -->
+  <section class="section-padding bg-paper">
+    <div class="container">
+      <div class="flex-between" style="margin-bottom: 3rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <span class="section-tag">OUR SERVICES</span>
+          <h2 class="section-title" style="margin-bottom: 0;">Comprehensive Supply Chain Solutions</h2>
+        </div>
+        <a href="./services.html" class="btn btn-outline">View All Services <i class="fas fa-arrow-right"></i></a>
+      </div>
+
+      <div class="grid grid-3" id="homeServicesGrid">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Warehousing & Fulfillment feature band -->
+  <section class="feature-band" style="background-image: url('https://images.unsplash.com/photo-1616401784845-180882ba9ba8?auto=format&fit=crop&w=1800&q=80');">
+    <div class="container">
+      <div class="feature-band-content card-glass">
+        <span class="mono" style="font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); font-weight: 700;">Warehousing &amp; Fulfillment</span>
+        <h2 style="color: #ffffff; margin: 0.75rem 0 1rem;">Pick, Pack, Ship — From Our Global Warehouse Network</h2>
+        <p style="color: rgba(255,255,255,0.85); margin-bottom: 1.5rem;">Climate-aware storage, same-day pick-and-pack, and live inventory sync with your storefront — all tracked under one manifest.</p>
+        <a href="./services.html" class="btn btn-accent">See Fulfillment Plans <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="section-padding bg-ink" style="background-image: linear-gradient(rgba(13,27,38,0.93), rgba(13,27,38,0.97)), url('https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=1800&q=60'); background-size: cover; background-position: center;">
+    <div class="container text-center">
+      <span class="section-tag">TESTIMONIALS</span>
+      <h2 class="section-title" style="color: var(--on-ink);">Trusted by Businesses Worldwide</h2>
+      <p class="section-subtitle" style="color: var(--on-ink-muted);">Read what our shippers and e-commerce partners say about our delivery performance.</p>
+
+      <div class="grid grid-2 text-left" id="homeTestimonialsGrid">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Dynamic Footer Container -->
+  <div id="footer-container"></div>
+
+  <!-- Scripts -->
+  <script type="module">
+    import { renderHeader } from './js/components/header.js';
+    import { renderFooter } from './js/components/footer.js';
+    import { cmsService } from './js/services/cmsService.js';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      renderHeader();
+      renderFooter();
+
+      // Hero Form Listener
+      document.getElementById('heroTrackingForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const code = document.getElementById('heroTrackingInput').value.trim();
+        if (code) {
+          window.location.href = `/tracking.html?tracking=${encodeURIComponent(code)}`;
+        }
+      });
+
+      // Load Services
+      const services = [
+        { title: "Air Freight Forwarding", icon: "fa-plane", desc: "Priority air cargo dispatch for urgent international shipments.", link: "air-freight", img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=70" },
+        { title: "Ocean Sea Cargo", icon: "fa-ship", desc: "Full Container Load (FCL) and Less than Container Load (LCL) global shipping.", link: "sea-freight", img: "https://images.unsplash.com/photo-1494412651409-8963ce7935a7?auto=format&fit=crop&w=600&q=70" },
+        { title: "Express Door-to-Door", icon: "fa-truck-fast", desc: "Rapid last-mile delivery directly to your customer's doorstep.", link: "door-to-door", img: "https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?auto=format&fit=crop&w=600&q=70" },
+        { title: "Customs Clearance Brokerage", icon: "fa-passport", desc: "Seamless import/export duty calculation and document management.", link: "customs", img: "https://images.unsplash.com/photo-1517502884422-41eaead166d4?auto=format&fit=crop&w=600&q=70" },
+        { title: "E-Commerce Fulfillment", icon: "fa-warehouse", desc: "Pick, pack, and automated inventory sync with major storefronts.", link: "fulfillment", img: "https://images.unsplash.com/photo-1616401784845-180882ba9ba8?auto=format&fit=crop&w=600&q=70" },
+        { title: "Temperature Controlled Storage", icon: "fa-temperature-low", desc: "Pharma and perishable cargo cold-chain logistics.", link: "warehousing", img: "https://images.unsplash.com/photo-1595246140625-573b715d11dc?auto=format&fit=crop&w=600&q=70" }
+      ];
+
+      const servicesGrid = document.getElementById('homeServicesGrid');
+      servicesGrid.innerHTML = services.map(s => `
+        <div class="service-card service-card-photo">
+          <img class="service-card-img" src="${s.img}" alt="${s.title}">
+          <div class="service-card-body">
+            <div class="service-icon"><i class="fas ${s.icon}"></i></div>
+            <h3>${s.title}</h3>
+            <p class="text-muted" style="margin: 0.75rem 0 1.25rem 0;">${s.desc}</p>
+            <a href="./service-details.html?service=${s.link}" class="font-bold text-primary">Explore Service <i class="fas fa-chevron-right"></i></a>
+          </div>
+        </div>
+      `).join('');
+
+      // Load Testimonials
+      const testimonials = await cmsService.getTestimonials();
+      const testGrid = document.getElementById('homeTestimonialsGrid');
+      testGrid.innerHTML = testimonials.map(t => `
+        <div class="card card-glass">
+          <div style="color: var(--accent); margin-bottom: 1rem;">
+            ${'<i class="fas fa-star"></i>'.repeat(t.rating)}
+          </div>
+          <p style="font-style: italic; font-size: 1.05rem; margin-bottom: 1.5rem; color: var(--on-ink);">"${t.content}"</p>
+          <div class="flex items-center gap-2">
+            <img src="${t.avatar_url}" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover;" alt="${t.author_name}">
+            <div>
+              <div class="font-bold" style="color: var(--on-ink);">${t.author_name}</div>
+              <div style="font-size: 0.85rem; color: var(--on-ink-muted);">${t.author_title}, ${t.company}</div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    });
+  </script>
+</body>
+</html>
