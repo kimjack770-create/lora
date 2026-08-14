@@ -107,14 +107,18 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  overflow-x: hidden;
 }
 
+/* overflow-x lives on html, not body: a fixed-position child of an
+   overflow-clipped body (e.g. the WhatsApp button) is a known trigger for
+   mobile WebKit to lose track of the viewport as its containing block and
+   render the child off-screen. */
 body {
   font-family: var(--font-body);
   background-color: var(--bg-main);
   color: var(--text-main);
   line-height: 1.6;
-  overflow-x: hidden;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
