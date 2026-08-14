@@ -24,6 +24,17 @@
   --paper-border: #D9E0E4;
   --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
 
+  /* Navbar tokens — unlike the hero/footer ink bands, the navbar is white in
+     light mode and switches to ink in dark mode, so the site isn't all-dark. */
+  --nav-bg: #FFFFFF;
+  --nav-border: var(--border);
+  --nav-text: var(--text-main);
+  --nav-text-muted: var(--text-muted);
+  --nav-btn-bg: var(--bg-main);
+  --nav-btn-border: var(--border);
+  --nav-btn-hover-bg: var(--primary-light);
+  --nav-shadow: var(--shadow-sm);
+
   /* Status Colors */
   --success: #10B981;
   --success-light: #D1FAE5;
@@ -74,6 +85,16 @@
   --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.5);
   --paper: #0F1922;
   --paper-border: #223140;
+
+  /* Navbar reverts to the permanent ink treatment in dark mode */
+  --nav-bg: var(--ink);
+  --nav-border: var(--ink-border);
+  --nav-text: var(--on-ink);
+  --nav-text-muted: var(--on-ink-muted);
+  --nav-btn-bg: var(--ink-2);
+  --nav-btn-border: var(--ink-border);
+  --nav-btn-hover-bg: var(--ink-border);
+  --nav-shadow: none;
 }
 
 /* Global Reset */

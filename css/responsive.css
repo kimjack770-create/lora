@@ -3,14 +3,12 @@
    Mobile-first & Multi-breakpoint Mobile Responsive System
    ======================================================== */
 
+/* Hidden by default; components.css defines the boxed button styling
+   (background/border/color/size) and the media query below re-enables
+   display at narrower widths — don't redeclare those properties here or
+   they'll silently override the themed button styling site-wide. */
 .mobile-menu-btn {
   display: none;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  color: var(--text-main);
-  cursor: pointer;
-  padding: 0.5rem;
 }
 
 /* Touch-friendly input controls */
@@ -40,6 +38,53 @@ button, input, select, textarea, a {
 
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ========================================================
+   BREAKPOINT: 1100px (Navbar collapse)
+   The navbar carries 9 links + brand + lang/theme/menu actions, which no
+   longer fit on a single row once the viewport drops below a full desktop
+   width. Collapse to the hamburger drawer earlier than the general 768px
+   mobile breakpoint so the links never wrap into a broken multi-row navbar.
+   ======================================================== */
+@media (max-width: 1100px) {
+  .mobile-menu-btn {
+    display: flex;
+  }
+
+  .nav-menu {
+    display: none;
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: min(320px, 100%);
+    height: calc(100vh - 70px);
+    background: var(--nav-bg);
+    flex-direction: column;
+    padding: 1.25rem;
+    gap: 0.5rem;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    border-top: 1px solid var(--nav-border);
+    box-shadow: var(--shadow-lg);
+    overflow-y: auto;
+    z-index: 999;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin: 0;
+  }
+
+  .nav-menu.open {
+    display: flex;
+    transform: translateX(0);
+  }
+
+  .nav-link {
+    font-size: 1rem;
+    width: 100%;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--nav-border);
   }
 }
 
@@ -101,46 +146,8 @@ button, input, select, textarea, a {
    BREAKPOINT: 768px (Mobile Smartphones)
    ======================================================== */
 @media (max-width: 768px) {
-  .mobile-menu-btn {
-    display: flex;
-  }
-
   .nav-container {
     gap: 0.75rem;
-  }
-
-  .nav-menu {
-    display: none;
-    position: fixed;
-    top: 70px;
-    left: 0;
-    width: min(320px, 100%);
-    height: calc(100vh - 70px);
-    background: var(--ink);
-    flex-direction: column;
-    padding: 1.25rem;
-    gap: 0.5rem;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease-in-out;
-    border-top: 1px solid var(--ink-border);
-    box-shadow: var(--shadow-lg);
-    overflow-y: auto;
-    z-index: 999;
-    justify-content: flex-start;
-    align-items: flex-start;
-    margin: 0;
-  }
-
-  .nav-menu.open {
-    display: flex;
-    transform: translateX(0);
-  }
-
-  .nav-link {
-    font-size: 1rem;
-    width: 100%;
-    padding: 0.8rem 0;
-    border-bottom: 1px solid var(--ink-border);
   }
 
   /* Grid Conversions */

@@ -8,8 +8,9 @@
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: var(--ink);
-  border-bottom: 1px solid var(--ink-border);
+  background: var(--nav-bg);
+  border-bottom: 1px solid var(--nav-border);
+  box-shadow: var(--nav-shadow);
   padding: 1rem 0;
   transition: var(--transition);
 }
@@ -29,7 +30,7 @@
   font-family: var(--font-heading);
   font-size: 1.3rem;
   font-weight: 700;
-  color: var(--on-ink);
+  color: var(--nav-text);
   text-decoration: none;
   letter-spacing: 0.01em;
 }
@@ -70,13 +71,13 @@
 .nav-link {
   font-size: 0.92rem;
   font-weight: 500;
-  color: var(--on-ink-muted);
+  color: var(--nav-text-muted);
   padding: 0.5rem 0;
   position: relative;
 }
 
 .nav-link:hover, .nav-link.active {
-  color: var(--on-ink);
+  color: var(--nav-text);
 }
 
 .nav-link.active::after {
@@ -95,12 +96,13 @@
   align-items: center;
   gap: 0.75rem;
   flex-shrink: 0;
+  position: relative;
 }
 
 /* Theme Toggle Button */
 .theme-toggle-btn {
-  background: var(--ink-2);
-  border: 1px solid var(--ink-border);
+  background: var(--nav-btn-bg);
+  border: 1px solid var(--nav-btn-border);
   width: 38px;
   height: 38px;
   border-radius: var(--radius-sm);
@@ -108,13 +110,13 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: var(--on-ink-muted);
+  color: var(--nav-text-muted);
   transition: var(--transition);
 }
 
 .mobile-menu-btn {
-  background: var(--ink-2);
-  border: 1px solid var(--ink-border);
+  background: var(--nav-btn-bg);
+  border: 1px solid var(--nav-btn-border);
   width: 38px;
   height: 38px;
   border-radius: var(--radius-sm);
@@ -122,14 +124,14 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: var(--on-ink-muted);
+  color: var(--nav-text-muted);
   transition: var(--transition);
 }
 
 .mobile-menu-btn:hover,
 .theme-toggle-btn:hover {
-  background: var(--ink-border);
-  color: var(--on-ink);
+  background: var(--nav-btn-hover-bg);
+  color: var(--nav-text);
 }
 
 /* Hero Section — flat ink "control tower" treatment, no photo/gradient */
@@ -697,33 +699,182 @@
 
 .modal-close:hover { color: var(--danger); }
 
-/* ---- Google Translate Widget Styling ---- */
-/* Hide the Google top bar banner */
+/* ---- Google Translate Engine (widget UI is hidden — see .lang-dropdown-menu) ---- */
+/* Hide the Google top bar banner injected on the body */
 .goog-te-banner-frame.skiptranslate { display: none !important; }
 body { top: 0 !important; }
 
-/* Style the translate select dropdown */
-#google_translate_element .goog-te-gadget-simple {
+/* The real Google widget stays in the DOM (Google needs it to build the
+   translate <select>) but is visually hidden — our own menu below drives it. */
+#google_translate_element.goog-te-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---- Custom Language Dropdown ---- */
+.lang-selector-wrap {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Anchored to .nav-actions (not the narrower lang button) so the panel's
+   right edge lines up with the navbar's right edge instead of overlapping
+   the theme/hamburger buttons that sit to the right of the lang button. */
+.lang-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 0.6rem);
+  right: 0;
+  width: 320px;
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
-  padding: 0.5rem 0.8rem;
+  box-shadow: var(--shadow-lg);
+  padding: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 2100;
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: var(--transition);
+}
+
+.lang-dropdown-menu.open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+/* With ~100 languages available, a search box keeps the list usable */
+.lang-search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  padding: 0.5rem 0.7rem;
+  background: var(--bg-main);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.lang-search-wrap i {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  flex-shrink: 0;
+}
+
+.lang-search-wrap input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
   font-family: var(--font-body);
   font-size: 0.85rem;
   color: var(--text-main);
-  cursor: pointer;
-  white-space: nowrap;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
 }
 
-#google_translate_element .goog-te-gadget-simple .goog-te-menu-value {
+.lang-options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.15rem;
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 0.15rem;
+}
+
+.lang-no-results {
+  grid-column: 1 / -1;
+  padding: 1rem 0.5rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.lang-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.6rem;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
   color: var(--text-main);
+  text-align: left;
+  cursor: pointer;
+  transition: var(--transition);
 }
 
-#google_translate_element .goog-te-gadget-simple span {
+.lang-option:hover {
+  background: var(--primary-light);
   color: var(--primary);
 }
 
-#google_translate_element .goog-te-gadget {
-  font-family: var(--font-body);
+.lang-option.active {
+  background: var(--accent-light);
+  color: var(--accent-hover);
+  font-weight: 600;
+}
+
+.lang-flag {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+  .lang-dropdown-menu {
+    width: 260px;
+  }
+
+  .lang-options-grid {
+    grid-template-columns: 1fr;
+    max-height: 260px;
+  }
+}
+
+/* ---- WhatsApp Floating Button ---- */
+.whatsapp-float-btn {
+  position: fixed;
+  bottom: 1.75rem;
+  right: 1.75rem;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #25D366;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  box-shadow: 0 6px 18px rgba(13, 27, 38, 0.35);
+  z-index: 1500;
+  transition: var(--transition);
+}
+
+.whatsapp-float-btn:hover {
+  background: #1FAF57;
+  color: #ffffff;
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 10px 26px rgba(13, 27, 38, 0.4);
+}
+
+@media (max-width: 480px) {
+  .whatsapp-float-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+    bottom: 1.25rem;
+    right: 1.25rem;
+  }
 }

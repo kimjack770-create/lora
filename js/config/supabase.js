@@ -6,7 +6,7 @@
 // ========================================================
 
 export const SUPABASE_CONFIG = {
-  SUPABASE_URL: "https://YOUR-SWIFLORA-PROJECT.supabase.co",
-  SUPABASE_ANON_KEY: "YOUR-SWIFLORA-ANON-PUBLISHABLE-KEY",
+  SUPABASE_URL: "https://yklotzhdtbsnkoicebsy.supabase.co",
+  SUPABASE_ANON_KEY: "sb_publishable_5c8U2gqDglubOxKwusGqLw_fnUeq7q-",
   USE_MOCK_FALLBACK: true
 };

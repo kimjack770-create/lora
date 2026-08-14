@@ -482,7 +482,7 @@ INSERT INTO public.cms_content (id, section_name, content) VALUES
     "slogan": "Rooted in Reliability. Built for Speed.",
     "phone": "+1 364 547 2182",
     "email": "support@swifloralogistics.com",
-    "address": "[Add your office address here]",
+    "address": "4080 Jenkins Road, Chattanooga, TN 37421 USA",
     "working_hours": "Mon - Sat: 8:00 AM - 9:00 PM EST"
 }') ON CONFLICT (id) DO NOTHING;
 

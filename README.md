@@ -91,9 +91,8 @@ the site before connecting a real backend.
 
 ## Things to fill in before launch
 
-- **Office address**: currently a placeholder `[Add your office address
-  here]` in the footer, contact page, and `cms_content`/`company_info` row in
-  Supabase — search the project for that string and replace it.
+- **Office address**: set to `4080 Jenkins Road, Chattanooga, TN 37421 USA` in
+  the footer, contact page, and `cms_content`/`company_info` row in Supabase.
 - **Social media links**: footer social icons currently link to `#`.
 - **Logo**: `favicon.svg` is a custom-designed mark — a flat emerald tile
   with a hand-drawn leaf and a flat gold vein line (no gradients). Swap it for your own artwork any time —

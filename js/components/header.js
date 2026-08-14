@@ -5,6 +5,126 @@
 
 import { authService } from '../services/authService.js';
 
+// Full catalog of languages supported by the Google Translate widget —
+// not just a curated shortlist — so visitors can search/select any of them.
+// Covers all major Asian languages (Chinese Simplified/Traditional, Japanese,
+// Korean, Hindi, Bengali, Urdu, Thai, Vietnamese, Indonesian, Malay, Filipino,
+// Khmer, Lao, Burmese, Mongolian, Nepali, Sinhala, Tamil, Telugu, Kannada,
+// Malayalam, Punjabi, Marathi, Gujarati, Odia, Uzbek, Kazakh, Kyrgyz, Tajik,
+// Turkmen, Uyghur, Pashto, Persian, Hebrew, Armenian, Georgian, Azerbaijani...)
+// alongside European, African, and other world languages.
+const SITE_LANGUAGES = [
+  { code: 'en', name: 'English', flag: '🇺🇸' },
+  { code: 'af', name: 'Afrikaans', flag: '🇿🇦' },
+  { code: 'sq', name: 'Shqip', flag: '🇦🇱' },
+  { code: 'am', name: 'አማርኛ', flag: '🇪🇹' },
+  { code: 'ar', name: 'العربية', flag: '🇸🇦' },
+  { code: 'hy', name: 'Հայերեն', flag: '🇦🇲' },
+  { code: 'az', name: 'Azərbaycan', flag: '🇦🇿' },
+  { code: 'eu', name: 'Euskara', flag: '🌐' },
+  { code: 'be', name: 'Беларуская', flag: '🇧🇾' },
+  { code: 'bn', name: 'বাংলা', flag: '🇧🇩' },
+  { code: 'bs', name: 'Bosanski', flag: '🇧🇦' },
+  { code: 'bg', name: 'Български', flag: '🇧🇬' },
+  { code: 'ca', name: 'Català', flag: '🌐' },
+  { code: 'ceb', name: 'Cebuano', flag: '🇵🇭' },
+  { code: 'ny', name: 'Chichewa', flag: '🇲🇼' },
+  { code: 'zh-CN', name: '中文 (简体)', flag: '🇨🇳' },
+  { code: 'zh-TW', name: '中文 (繁體)', flag: '🇹🇼' },
+  { code: 'co', name: 'Corsu', flag: '🌐' },
+  { code: 'hr', name: 'Hrvatski', flag: '🇭🇷' },
+  { code: 'cs', name: 'Čeština', flag: '🇨🇿' },
+  { code: 'da', name: 'Dansk', flag: '🇩🇰' },
+  { code: 'nl', name: 'Nederlands', flag: '🇳🇱' },
+  { code: 'eo', name: 'Esperanto', flag: '🌐' },
+  { code: 'et', name: 'Eesti', flag: '🇪🇪' },
+  { code: 'tl', name: 'Filipino', flag: '🇵🇭' },
+  { code: 'fi', name: 'Suomi', flag: '🇫🇮' },
+  { code: 'fr', name: 'Français', flag: '🇫🇷' },
+  { code: 'fy', name: 'Frysk', flag: '🌐' },
+  { code: 'gl', name: 'Galego', flag: '🌐' },
+  { code: 'ka', name: 'ქართული', flag: '🇬🇪' },
+  { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
+  { code: 'el', name: 'Ελληνικά', flag: '🇬🇷' },
+  { code: 'gu', name: 'ગુજરાતી', flag: '🇮🇳' },
+  { code: 'ht', name: 'Kreyòl Ayisyen', flag: '🇭🇹' },
+  { code: 'ha', name: 'Hausa', flag: '🇳🇬' },
+  { code: 'haw', name: 'ʻŌlelo Hawaiʻi', flag: '🌐' },
+  { code: 'iw', name: 'עברית', flag: '🇮🇱' },
+  { code: 'hi', name: 'हिन्दी', flag: '🇮🇳' },
+  { code: 'hmn', name: 'Hmong', flag: '🌐' },
+  { code: 'hu', name: 'Magyar', flag: '🇭🇺' },
+  { code: 'is', name: 'Íslenska', flag: '🇮🇸' },
+  { code: 'ig', name: 'Igbo', flag: '🇳🇬' },
+  { code: 'id', name: 'Bahasa Indonesia', flag: '🇮🇩' },
+  { code: 'ga', name: 'Gaeilge', flag: '🇮🇪' },
+  { code: 'it', name: 'Italiano', flag: '🇮🇹' },
+  { code: 'ja', name: '日本語', flag: '🇯🇵' },
+  { code: 'jw', name: 'Basa Jawa', flag: '🇮🇩' },
+  { code: 'kn', name: 'ಕನ್ನಡ', flag: '🇮🇳' },
+  { code: 'kk', name: 'Қазақ', flag: '🇰🇿' },
+  { code: 'km', name: 'ខ្មែរ', flag: '🇰🇭' },
+  { code: 'rw', name: 'Kinyarwanda', flag: '🇷🇼' },
+  { code: 'ko', name: '한국어', flag: '🇰🇷' },
+  { code: 'ku', name: 'Kurdî', flag: '🌐' },
+  { code: 'ky', name: 'Кыргызча', flag: '🇰🇬' },
+  { code: 'lo', name: 'ລາວ', flag: '🇱🇦' },
+  { code: 'la', name: 'Latina', flag: '🌐' },
+  { code: 'lv', name: 'Latviešu', flag: '🇱🇻' },
+  { code: 'lt', name: 'Lietuvių', flag: '🇱🇹' },
+  { code: 'lb', name: 'Lëtzebuergesch', flag: '🇱🇺' },
+  { code: 'mk', name: 'Македонски', flag: '🇲🇰' },
+  { code: 'mg', name: 'Malagasy', flag: '🇲🇬' },
+  { code: 'ms', name: 'Bahasa Melayu', flag: '🇲🇾' },
+  { code: 'ml', name: 'മലയാളം', flag: '🇮🇳' },
+  { code: 'mt', name: 'Malti', flag: '🇲🇹' },
+  { code: 'mi', name: 'Māori', flag: '🇳🇿' },
+  { code: 'mr', name: 'मराठी', flag: '🇮🇳' },
+  { code: 'mn', name: 'Монгол', flag: '🇲🇳' },
+  { code: 'my', name: 'မြန်မာ', flag: '🇲🇲' },
+  { code: 'ne', name: 'नेपाली', flag: '🇳🇵' },
+  { code: 'no', name: 'Norsk', flag: '🇳🇴' },
+  { code: 'or', name: 'ଓଡ଼ିଆ', flag: '🇮🇳' },
+  { code: 'ps', name: 'پښتو', flag: '🇦🇫' },
+  { code: 'fa', name: 'فارسی', flag: '🇮🇷' },
+  { code: 'pl', name: 'Polski', flag: '🇵🇱' },
+  { code: 'pt', name: 'Português', flag: '🇵🇹' },
+  { code: 'pa', name: 'ਪੰਜਾਬੀ', flag: '🇮🇳' },
+  { code: 'ro', name: 'Română', flag: '🇷🇴' },
+  { code: 'ru', name: 'Русский', flag: '🇷🇺' },
+  { code: 'sm', name: 'Gagana Sāmoa', flag: '🇼🇸' },
+  { code: 'gd', name: 'Gàidhlig', flag: '🌐' },
+  { code: 'sr', name: 'Српски', flag: '🇷🇸' },
+  { code: 'st', name: 'Sesotho', flag: '🇱🇸' },
+  { code: 'sn', name: 'ChiShona', flag: '🇿🇼' },
+  { code: 'sd', name: 'سنڌي', flag: '🇵🇰' },
+  { code: 'si', name: 'සිංහල', flag: '🇱🇰' },
+  { code: 'sk', name: 'Slovenčina', flag: '🇸🇰' },
+  { code: 'sl', name: 'Slovenščina', flag: '🇸🇮' },
+  { code: 'so', name: 'Soomaali', flag: '🇸🇴' },
+  { code: 'es', name: 'Español', flag: '🇪🇸' },
+  { code: 'su', name: 'Basa Sunda', flag: '🇮🇩' },
+  { code: 'sw', name: 'Kiswahili', flag: '🇰🇪' },
+  { code: 'sv', name: 'Svenska', flag: '🇸🇪' },
+  { code: 'tg', name: 'Тоҷикӣ', flag: '🇹🇯' },
+  { code: 'ta', name: 'தமிழ்', flag: '🇮🇳' },
+  { code: 'tt', name: 'Татар', flag: '🌐' },
+  { code: 'te', name: 'తెలుగు', flag: '🇮🇳' },
+  { code: 'th', name: 'ไทย', flag: '🇹🇭' },
+  { code: 'tr', name: 'Türkçe', flag: '🇹🇷' },
+  { code: 'tk', name: 'Türkmençe', flag: '🇹🇲' },
+  { code: 'uk', name: 'Українська', flag: '🇺🇦' },
+  { code: 'ur', name: 'اردو', flag: '🇵🇰' },
+  { code: 'ug', name: 'ئۇيغۇرچە', flag: '🌐' },
+  { code: 'uz', name: 'Oʻzbek', flag: '🇺🇿' },
+  { code: 'vi', name: 'Tiếng Việt', flag: '🇻🇳' },
+  { code: 'cy', name: 'Cymraeg', flag: '🏴' },
+  { code: 'xh', name: 'isiXhosa', flag: '🇿🇦' },
+  { code: 'yi', name: 'ייִדיש', flag: '🌐' },
+  { code: 'yo', name: 'Yorùbá', flag: '🇳🇬' },
+  { code: 'zu', name: 'isiZulu', flag: '🇿🇦' },
+];
+
 export function renderHeader() {
   const headerContainer = document.getElementById('header-container');
   if (!headerContainer) return;
@@ -36,11 +156,27 @@ export function renderHeader() {
 
         <div class="nav-actions">
           <!-- Language Selector -->
-          <div class="lang-selector-wrap" id="langSelectorWrap" style="position: relative; display: inline-flex; align-items: center;">
-            <button class="theme-toggle-btn" id="langToggleBtn" title="Translate Page" style="gap:0.3rem;">
+          <div class="lang-selector-wrap" id="langSelectorWrap">
+            <button class="theme-toggle-btn" id="langToggleBtn" title="Translate Page" aria-haspopup="true" aria-expanded="false">
               <i class="fas fa-globe"></i>
             </button>
-            <div id="google_translate_element" style="position: absolute; top: 110%; right: 0; min-width: 180px; z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.2s;"></div>
+            <div class="lang-dropdown-menu" id="langDropdownMenu" role="menu">
+              <div class="lang-search-wrap">
+                <i class="fas fa-search"></i>
+                <input type="text" id="langSearchInput" placeholder="Search ${SITE_LANGUAGES.length} languages..." autocomplete="off">
+              </div>
+              <div class="lang-options-grid" id="langOptionsGrid">
+                ${SITE_LANGUAGES.map(l => `
+                  <button type="button" class="lang-option${l.code === 'en' ? ' active' : ''}" data-lang="${l.code}" data-search="${l.name.toLowerCase()} ${l.code}" role="menuitem">
+                    <span class="lang-flag">${l.flag}</span><span>${l.name}</span>
+                  </button>
+                `).join('')}
+                <div class="lang-no-results" id="langNoResults" hidden>No languages match your search.</div>
+              </div>
+            </div>
+            <!-- Google Translate needs this element in the DOM to build its
+                 language <select>, but the UI above drives it — see .goog-te-hidden -->
+            <div id="google_translate_element" class="goog-te-hidden"></div>
           </div>
 
           <button class="theme-toggle-btn" id="themeToggleBtn" title="Toggle Light/Dark Theme">
@@ -59,7 +195,13 @@ export function renderHeader() {
   if (!document.getElementById('google-translate-script')) {
     window.googleTranslateElementInit = function () {
       new window.google.translate.TranslateElement(
-        { pageLanguage: 'en', layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE },
+        {
+          pageLanguage: 'en',
+          // No includedLanguages cap — Google's full supported-language set
+          // backs the widget so every option in SITE_LANGUAGES resolves.
+          layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+          autoDisplay: false,
+        },
         'google_translate_element'
       );
     };
@@ -70,22 +212,72 @@ export function renderHeader() {
     document.head.appendChild(gScript);
   }
 
-  // Language Toggle Listener
+  // Switches the page language by driving Google Translate's hidden <select>.
+  function setSiteLanguage(langCode) {
+    const combo = document.querySelector('#google_translate_element select.goog-te-combo');
+    if (combo) {
+      combo.value = langCode;
+      combo.dispatchEvent(new Event('change'));
+    } else {
+      // Widget not ready yet (translate script still loading) — fall back
+      // to the cookie Google Translate itself reads on page load.
+      document.cookie = `googtrans=/en/${langCode}; path=/`;
+      window.location.reload();
+    }
+  }
+
+  // Language Dropdown Listener
   const langBtn = document.getElementById('langToggleBtn');
-  const translateEl = document.getElementById('google_translate_element');
-  let langOpen = false;
-  if (langBtn && translateEl) {
+  const langMenu = document.getElementById('langDropdownMenu');
+  const langSearchInput = document.getElementById('langSearchInput');
+  const langNoResults = document.getElementById('langNoResults');
+  const langOptions = langMenu ? Array.from(langMenu.querySelectorAll('.lang-option')) : [];
+
+  const filterLangOptions = (query) => {
+    const q = query.trim().toLowerCase();
+    let visibleCount = 0;
+    langOptions.forEach(opt => {
+      const matches = !q || opt.getAttribute('data-search').includes(q);
+      opt.hidden = !matches;
+      if (matches) visibleCount++;
+    });
+    if (langNoResults) langNoResults.hidden = visibleCount > 0;
+  };
+
+  if (langBtn && langMenu) {
+    const closeLangMenu = () => {
+      langMenu.classList.remove('open');
+      langBtn.setAttribute('aria-expanded', 'false');
+    };
     langBtn.onclick = (e) => {
       e.stopPropagation();
-      langOpen = !langOpen;
-      translateEl.style.opacity = langOpen ? '1' : '0';
-      translateEl.style.pointerEvents = langOpen ? 'all' : 'none';
+      const isOpen = langMenu.classList.toggle('open');
+      langBtn.setAttribute('aria-expanded', String(isOpen));
+      if (isOpen && langSearchInput) {
+        langSearchInput.value = '';
+        filterLangOptions('');
+        setTimeout(() => langSearchInput.focus(), 0);
+      }
     };
-    document.addEventListener('click', () => {
-      langOpen = false;
-      translateEl.style.opacity = '0';
-      translateEl.style.pointerEvents = 'none';
+    // Keep the menu open while interacting with the search box or scrolling the list.
+    langMenu.addEventListener('click', (e) => e.stopPropagation());
+    if (langSearchInput) {
+      langSearchInput.addEventListener('input', () => filterLangOptions(langSearchInput.value));
+      langSearchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeLangMenu();
+      });
+    }
+    langOptions.forEach(opt => {
+      opt.onclick = (e) => {
+        e.stopPropagation();
+        const code = opt.getAttribute('data-lang');
+        langOptions.forEach(o => o.classList.remove('active'));
+        opt.classList.add('active');
+        setSiteLanguage(code);
+        closeLangMenu();
+      };
     });
+    document.addEventListener('click', closeLangMenu);
   }
 
   // Theme Toggle Listener
@@ -136,4 +328,24 @@ export function renderHeader() {
       closeMenu();
     }
   });
+
+  renderWhatsAppButton();
+}
+
+// Floating WhatsApp chat button — fixed to the viewport so it stays visible
+// while scrolling, present on every page that renders the header.
+const WHATSAPP_NUMBER = '13645472182'; // +1 (364) 547-2182
+function renderWhatsAppButton() {
+  if (document.getElementById('whatsappFloatBtn')) return;
+
+  const btn = document.createElement('a');
+  btn.id = 'whatsappFloatBtn';
+  btn.className = 'whatsapp-float-btn';
+  btn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hi Swiflora Logistics, I have a question about a shipment.')}`;
+  btn.target = '_blank';
+  btn.rel = 'noopener noreferrer';
+  btn.setAttribute('aria-label', 'Chat with Swiflora Logistics on WhatsApp');
+  btn.title = 'Chat with us on WhatsApp';
+  btn.innerHTML = '<i class="fab fa-whatsapp"></i>';
+  document.body.appendChild(btn);
 }
