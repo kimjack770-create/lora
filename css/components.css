@@ -729,18 +729,19 @@ body { top: 0 !important; }
 }
 
 /* ---- Custom Language Dropdown ---- */
-/* position:relative here (not on .navbar/.nav-actions) makes this the
-   guaranteed containing block for the absolutely positioned dropdown below.
-   .navbar is position:sticky AND has backdrop-filter, both of which also
-   establish a containing block per spec — but mobile WebKit (Safari/Chrome
-   iOS) is inconsistent about honoring that on a sticky ancestor before it's
-   actually "stuck", which let the dropdown's right:0 resolve against the
-   wrong/wider box and hang off the right edge of the screen. Anchoring to
-   this immediate, always-in-flow wrapper removes that ambiguity entirely. */
+/* .lang-selector-wrap itself is NOT position:relative: it only wraps the
+   globe button, which sits at the LEFT end of the 3-button .nav-actions
+   group (globe -> theme toggle -> hamburger). Anchoring right:0 to it would
+   put the dropdown's right edge ~100px left of the real screen edge, so the
+   panel still hangs off-screen on narrow phones. .nav-actions (the whole
+   right-aligned button group) already has position:relative, and — being a
+   plain in-flow block with no sticky/backdrop-filter of its own — is a
+   deterministic containing block, unlike relying on the sticky+blurred
+   .navbar further up. Falling through to it here anchors the dropdown's
+   right edge to the group's actual right edge. */
 .lang-selector-wrap {
   display: inline-flex;
   align-items: center;
-  position: relative;
 }
 
 .lang-dropdown-menu {
