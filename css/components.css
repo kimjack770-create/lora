@@ -97,6 +97,16 @@
   gap: 0.75rem;
   flex-shrink: 0;
   position: relative;
+  /* .nav-container is justify-content:space-between with flex-wrap:wrap.
+     On narrow screens the brand logo + nav-actions don't always fit one
+     row, and .nav-menu is display:none (out of flow) below 1100px, leaving
+     nav-actions as the ONLY item on the wrapped second line — space-between
+     has nothing to distribute space "between" with a single item, so it
+     collapses to the left edge instead of staying right-aligned. That put
+     the lang/theme/hamburger buttons at the left, which then broke the
+     language dropdown's right:0 anchor and pushed it off-screen. auto
+     margin forces this to hug the right edge on its own line too. */
+  margin-left: auto;
 }
 
 /* Theme Toggle Button */
