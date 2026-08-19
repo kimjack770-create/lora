@@ -4,6 +4,7 @@
 // ========================================================
 
 import { authService } from '../services/authService.js';
+import { MAINTENANCE_MODE } from '../config/maintenance.js';
 
 // Full catalog of languages supported by the Google Translate widget —
 // not just a curated shortlist — so visitors can search/select any of them.
@@ -126,6 +127,25 @@ const SITE_LANGUAGES = [
 ];
 
 export function renderHeader() {
+  // renderHeader() runs first on every page (public site, admin console,
+  // customer portal), so gating here is the one place a site-wide
+  // maintenance screen can be toggled without editing every page. Flip
+  // MAINTENANCE_MODE back to false in js/config/maintenance.js to restore
+  // the real site — nothing else changes.
+  if (MAINTENANCE_MODE) {
+    document.body.innerHTML = `
+      <div class="maintenance-screen">
+        <div class="maintenance-content">
+          <div class="maintenance-icon"><i class="fas fa-tools"></i></div>
+          <h1>We'll be right back</h1>
+          <p>Swiflora Logistics is currently undergoing scheduled maintenance. Please check back shortly.</p>
+          <a href="mailto:support@swifloralogistics.com" class="btn btn-line">Contact Support</a>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
   const headerContainer = document.getElementById('header-container');
   if (!headerContainer) return;
 
