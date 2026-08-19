@@ -157,15 +157,37 @@
           created_at: new Date().toISOString()
         };
 
-        if (dbEngine.isRealSupabase) {
-          await dbEngine.client.from('contact_messages').insert([msgData]);
-        } else {
-          const msgs = dbEngine.getCollection('contact_messages');
-          msgs.unshift(msgData);
-          dbEngine.setCollection('contact_messages', msgs);
+        try {
+          if (dbEngine.isRealSupabase) {
+            await dbEngine.client.from('contact_messages').insert([msgData]);
+          } else {
+            const msgs = dbEngine.getCollection('contact_messages');
+            msgs.unshift(msgData);
+            dbEngine.setCollection('contact_messages', msgs);
+          }
+        } catch (dbErr) {
+          console.warn('DB save error:', dbErr);
         }
 
-        showToast('Your message has been sent successfully!', 'success');
+        let emailSent = false;
+        try {
+          const res = await fetch('/api/send-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(msgData)
+          });
+          const result = await res.json();
+          emailSent = !!result.success;
+        } catch (emailErr) {
+          console.warn('Email send error:', emailErr);
+        }
+
+        showToast(
+          emailSent
+            ? 'Your message has been sent successfully!'
+            : 'Message saved. You may also email support@swifloralogistics.com directly.',
+          emailSent ? 'success' : 'warning'
+        );
         document.getElementById('contactForm').reset();
       });
     });

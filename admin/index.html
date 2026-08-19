@@ -41,7 +41,7 @@
         </div>
         <div class="form-group">
           <label class="form-label">Password</label>
-          <input type="password" id="admPassword" class="form-control" value="swifloraadmin2026" required>
+          <input type="password" id="admPassword" class="form-control" value="swifloraadmin2062" required>
         </div>
         <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;"><i class="fas fa-key"></i>
           Authenticate Console</button>
@@ -56,8 +56,8 @@
     <aside class="sidebar" id="adminSidebar">
       <div class="sidebar-header">
         <a href="../index.html" class="brand-logo" style="font-size: 1.1rem;">
-          <div class="brand-icon" style="width: 32px; height: 32px; font-size: 0.9rem;"><img
-              src="../favicon.svg" alt="Swiflora Logistics" style="width: 100%; height: 100%; object-fit: contain;"></div>
+          <div class="brand-icon" style="width: 32px; height: 32px; font-size: 0.9rem;"><img src="../favicon.svg"
+              alt="Swiflora Logistics" style="width: 100%; height: 100%; object-fit: contain;"></div>
           SWIFLORA<span>LOGISTICS</span>
         </a>
         <button id="toggleSidebarBtn"
@@ -371,7 +371,8 @@
         <!-- 1. Sender Details -->
         <h4
           style="color: var(--primary); margin-bottom: 0.75rem; border-bottom: 1px solid var(--border); padding-bottom: 0.35rem;">
-          <i class="fas fa-user-tie"></i> 1. Sender Details</h4>
+          <i class="fas fa-user-tie"></i> 1. Sender Details
+        </h4>
         <div class="grid grid-2">
           <div class="form-group">
             <label class="form-label">Sender Name *</label>
@@ -396,7 +397,8 @@
         <!-- 2. Receiver Details -->
         <h4
           style="color: var(--accent); margin: 1.25rem 0 0.75rem 0; border-bottom: 1px solid var(--border); padding-bottom: 0.35rem;">
-          <i class="fas fa-user-check"></i> 2. Receiver Details</h4>
+          <i class="fas fa-user-check"></i> 2. Receiver Details
+        </h4>
         <div class="grid grid-2">
           <div class="form-group">
             <label class="form-label">Receiver Name *</label>
@@ -421,7 +423,8 @@
         <!-- 3. Shipment Details -->
         <h4
           style="color: var(--primary); margin: 1.25rem 0 0.75rem 0; border-bottom: 1px solid var(--border); padding-bottom: 0.35rem;">
-          <i class="fas fa-boxes"></i> 3. Shipment Details</h4>
+          <i class="fas fa-boxes"></i> 3. Shipment Details
+        </h4>
 
         <div class="grid grid-3">
           <div class="form-group">
@@ -434,7 +437,8 @@
           </div>
           <div class="form-group">
             <label class="form-label">Product / Cargo *</label>
-            <input type="text" id="nsProduct" class="form-control" placeholder="e.g. Commercial Goods, Electronics" required>
+            <input type="text" id="nsProduct" class="form-control" placeholder="e.g. Commercial Goods, Electronics"
+              required>
           </div>
           <div class="form-group">
             <label class="form-label">Pickup Time *</label>
@@ -590,8 +594,11 @@
 
       <!-- Existing Tracking Events List -->
       <div style="margin-top: 1.5rem; border-top: 1px solid var(--border); padding-top: 1.25rem;">
-        <h4 style="margin-bottom: 1rem; font-size: 0.95rem; color: var(--text-muted); font-weight: 700; letter-spacing: 0.04em;"><i class="fas fa-history"></i> EXISTING TRACKING UPDATES</h4>
-        <div id="adminEventsList" style="max-height: 260px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.6rem;">
+        <h4
+          style="margin-bottom: 1rem; font-size: 0.95rem; color: var(--text-muted); font-weight: 700; letter-spacing: 0.04em;">
+          <i class="fas fa-history"></i> EXISTING TRACKING UPDATES</h4>
+        <div id="adminEventsList"
+          style="max-height: 260px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.6rem;">
           <div class="text-muted" style="font-size:0.9rem;">Select a shipment to view its updates.</div>
         </div>
       </div>
@@ -601,20 +608,28 @@
   <!-- Shipment Created Success Modal -->
   <div class="modal" id="shipmentSuccessModal">
     <div class="modal-box text-center" style="max-width: 480px;">
-      <div style="width: 70px; height: 70px; background: rgba(46, 204, 113, 0.15); color: #2ecc71; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; margin: 0 auto 1.25rem auto;">
+      <div
+        style="width: 70px; height: 70px; background: rgba(46, 204, 113, 0.15); color: #2ecc71; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; margin: 0 auto 1.25rem auto;">
         <i class="fas fa-check-circle"></i>
       </div>
       <h2 style="color: var(--primary); margin-bottom: 0.5rem;">Shipment Created Successfully!</h2>
-      <p class="text-muted" style="margin-bottom: 1.5rem; font-size: 0.9rem;">The shipment has been registered and assigned a unique tracking code.</p>
+      <p class="text-muted" style="margin-bottom: 1.5rem; font-size: 0.9rem;">The shipment has been registered and
+        assigned a unique tracking code.</p>
 
-      <div style="background: var(--bg-main); border: 2px dashed var(--primary); padding: 1.25rem; border-radius: var(--radius-md); margin-bottom: 1.5rem;">
-        <div class="text-muted" style="font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.25rem;">GENERATED TRACKING CODE</div>
-        <div id="succTrackingCode" style="font-size: 1.6rem; font-weight: 800; color: var(--primary); font-family: monospace; letter-spacing: 0.05em;">SWF-20260811-XXXXXX</div>
+      <div
+        style="background: var(--bg-main); border: 2px dashed var(--primary); padding: 1.25rem; border-radius: var(--radius-md); margin-bottom: 1.5rem;">
+        <div class="text-muted"
+          style="font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.25rem;">GENERATED
+          TRACKING CODE</div>
+        <div id="succTrackingCode"
+          style="font-size: 1.6rem; font-weight: 800; color: var(--primary); font-family: monospace; letter-spacing: 0.05em;">
+          SWF-20260811-XXXXXX</div>
       </div>
 
       <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
         <button id="copyTrackingCodeBtn" class="btn btn-outline"><i class="fas fa-copy"></i> Copy Code</button>
-        <a id="trackPackageDirectBtn" href="#" target="_blank" class="btn btn-accent"><i class="fas fa-search"></i> Track Package Now</a>
+        <a id="trackPackageDirectBtn" href="#" target="_blank" class="btn btn-accent"><i class="fas fa-search"></i>
+          Track Package Now</a>
         <button id="closeSuccessModalBtn" class="btn btn-primary"><i class="fas fa-check"></i> Done</button>
       </div>
     </div>
